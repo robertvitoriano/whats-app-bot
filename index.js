@@ -1,3 +1,3 @@
-const bot = require('./whats-app-bot');
+const Admin = require('./Admin.js');
 
-bot.createClient();
+const bot  = new Admin();

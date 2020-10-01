@@ -2,7 +2,7 @@ const fs = require("fs");
 const { Client, Location, Chat, MessageMedia } = require("whatsapp-web.js");
 
 class Admin {
-  async initialize() {
+  constructor() {
     const SESSION_FILE_PATH = "./session.json";
     let sessionCfg;
     if (fs.existsSync(SESSION_FILE_PATH)) {
@@ -12,7 +12,8 @@ class Admin {
       puppeteer: { headless: false },
       session: sessionCfg,
     });
-
     client.initialize();
   }
 }
+
+module.exports = Admin

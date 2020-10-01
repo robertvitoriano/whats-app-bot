@@ -31,8 +31,6 @@ module.exports = {
          file = new MessageMedia("audio/ogg", encodedFile, url);
 
     }
-    
-
     client.sendMessage(msg.from, file);
   },
 
