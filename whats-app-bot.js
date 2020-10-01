@@ -2,7 +2,7 @@ const fs = require("fs");
 const { Client, Location, Chat, MessageMedia } = require("whatsapp-web.js");
 
 
-modelu.exports = {
+module.exports = {
 
   async createClient() {
     const SESSION_FILE_PATH = "./session.json";
@@ -19,12 +19,21 @@ modelu.exports = {
     client.initialize();
   },
 
-  async sendAudio(url) {
+  async sendFile(url,client,msg) {
     const buffer = fs.readFileSync(url);
     const encodedFile = buffer.toString("base64");
-    await chat.sendStateRecording();
-    const music = new MessageMedia("audio/ogg", encodedFile, url);
-    client.sendMessage(msg.from, music);
+    let file;
+    if(mediaType==="audio/ogg"){
+        await chat.sendStateRecording();
+         file = new MessageMedia("audio/ogg", encodedFile, url);
+
+    }else{
+         file = new MessageMedia("audio/ogg", encodedFile, url);
+
+    }
+    
+
+    client.sendMessage(msg.from, file);
   },
-  
+
 };
