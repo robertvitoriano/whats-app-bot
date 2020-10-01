@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { Client, Location, Chat } = require("whatsapp-web.js");
+const { Client, Location, Chat, MessageMedia } = require("whatsapp-web.js");
 
 const SESSION_FILE_PATH = "./session.json";
 let sessionCfg;
@@ -40,26 +40,64 @@ client.on("ready", () => {
   console.log("READY");
 });
 
+let isMenuOpen = false;
+
 client.on("message", async (msg) => {
-  const chats = await client.getChats();
-  const gustChat = chats.filter((chat) => chat.name === "Gus Bot");
-  const chat = gustChat[0];
-  switch (msg.body) {
-    case "limpar":
-      await chat[0].clearMessages();
-      break;
-    case "finalizar":
-      await chat[0].clearMessages();
-
-      break;
-
-    default:
-      break;
+  if (!isMenuOpen) {
+    if (msg.from === "5511930855040@c.us") {
+      console.log("FROM: ", msg.from);
+      const chats = await client.getChats();
+      const gustChat = chats.filter((chat) => chat.name === "Gus Bot");
+      const chat = gustChat[0];
+      client.sendMessage(
+        msg.from,
+        "Seja-bem vindo(a) ao menu, digite um dos números abaixo e selecione a opção que você deseja"
+      );
+      client.sendMessage(
+        msg.from,
+        "1 - ouvir uma música\n2 - ver um gatinho\n 3 - sair do menu"
+      );
+      isMenuOpen = true;
+    }
   }
-  await gustChat[0].clearMessages();
-  console.log(chat);
 });
-
+client.on("message", async (msg) => {
+    const chats = await client.getChats();
+    const gustChat = chats.filter((chat) => chat.name === "Gus Bot");
+    const chat = gustChat[0];
+  if (isMenuOpen) {
+    if (msg.from === "5511930855040@c.us") {
+      switch (msg.body) {
+        case "1":
+          const rockyBuffer = fs.readFileSync("./assets/theme_rocky.mp3");
+          const song64 = rockyBuffer.toString("base64");
+          await chat.sendStateRecording();
+          const music = new MessageMedia(
+            "audio/ogg",
+            song64,
+            "./assets/theme_rocky.mp3"
+          );
+          client.sendMessage(msg.from, music);
+          break;
+        case "2":
+          const file_buffer = fs.readFileSync("./assets/gatinho.jpg");
+          const gatinho64 = file_buffer.toString("base64");
+          const img = new MessageMedia(
+            "image/jpeg",
+            gatinho64,
+            "./assets/gatinho.jpg"
+          );
+          client.sendMessage(msg.from, img);
+          break;
+        case "3":
+          client.sendMessage(msg.from, "Obrigado por utilizar nossos serviços");
+          break;
+        default:
+          break;
+      }
+    }
+  }
+});
 client.on("disconnected", (reason) => {
   console.log("Client was logged out", reason);
 });
