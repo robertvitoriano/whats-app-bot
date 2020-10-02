@@ -11,7 +11,7 @@ module.exports = {
       sessionCfg = require(SESSION_FILE_PATH);
     }
 
-    const client = new Client({
+    this.client = new Client({
       puppeteer: { headless: false },
       session: sessionCfg,
     });
@@ -19,7 +19,8 @@ module.exports = {
     client.initialize();
   },
 
-  async sendFile(url,client,msg) {
+  async sendFile(url,number) {
+    const adress = `55${number}@c.us`
     const buffer = fs.readFileSync(url);
     const encodedFile = buffer.toString("base64");
     let file;
@@ -31,7 +32,7 @@ module.exports = {
          file = new MessageMedia("audio/ogg", encodedFile, url);
 
     }
-    client.sendMessage(msg.from, file);
+    this.client.sendMessage(adress, file);
   },
 
 };

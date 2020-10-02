@@ -1,3 +1,3 @@
-const Admin = require('./Admin.js');
+const Bot = require('./wpp-bot.js');
 
-const bot  = new Admin();
+const bot  = new Bot();

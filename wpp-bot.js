@@ -14,6 +14,29 @@ class Admin {
     });
     client.initialize();
   }
+
+  this.client
+
+  async sendFile(url,client){
+    const buffer = fs.readFileSync(url);
+    const encodedFile = buffer.toString("base64");
+    let file;
+    if(mediaType==="audio/ogg"){
+        await chat.sendStateRecording();
+         file = new MessageMedia("audio/ogg", encodedFile, url);
+
+    }else{
+         file = new MessageMedia("audio/ogg", encodedFile, url);
+
+    }
+    client.sendMessage(msg.from, file);
+
+
+  }
+
+
+
+  
 }
 
 module.exports = Admin
