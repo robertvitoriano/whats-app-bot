@@ -8,30 +8,31 @@ class Admin {
     if (fs.existsSync(SESSION_FILE_PATH)) {
       sessionCfg = require(SESSION_FILE_PATH);
     }
-    const client = new Client({
+    this.client = new Client({
       puppeteer: { headless: false },
       session: sessionCfg,
     });
-    client.initialize();
+    this.client.initialize();
   }
 
-  this.client
-
-  async sendFile(url,client){
+  async sendFile(url,number) {
+    const adress = `55${number}@c.us`
     const buffer = fs.readFileSync(url);
     const encodedFile = buffer.toString("base64");
     let file;
     if(mediaType==="audio/ogg"){
         await chat.sendStateRecording();
          file = new MessageMedia("audio/ogg", encodedFile, url);
-
     }else{
          file = new MessageMedia("audio/ogg", encodedFile, url);
-
     }
-    client.sendMessage(msg.from, file);
+    this.client.sendMessage(adress, file);
+  }
 
+  async sendFile(msg,number) {
+    const adress = `55${number}@c.us`
 
+    this.client.sendMessage(adress, msg);
   }
 
 
