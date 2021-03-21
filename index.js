@@ -64,7 +64,7 @@ bot.client.on("message", async (msg) => {
           const music = new MessageMedia(
             "audio/ogg",
             song64,
-            "./assets/theme_rocky.mp3"
+            "assets/theme_rocky.mp3"
           );
           bot.client.sendMessage(msg.from, music);
           break;
@@ -74,7 +74,7 @@ bot.client.on("message", async (msg) => {
           const img = new MessageMedia(
             "image/jpeg",
             gatinho64,
-            "./assets/gatinho.jpg"
+            "assets/gatinho.jpg"
           );
           bot.client.sendMessage(msg.from, img);
           break;
