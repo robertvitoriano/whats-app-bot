@@ -1,48 +1,47 @@
 const Bot = require('./wpp-bot.js');
-
+const fs = require('fs')
 const bot  = new Bot();
 
-bot.sendFile('')
 
 
-client.on("qr", (qr) => {
+bot.client.on("qr", (qr) => {
   // NOTE: This event will not be fired if a session is specified.
   console.log("QR RECEIVED", qr);
 });
 
-client.on("authenticated", (session) => {
+bot.client.on("authenticated", (session) => {
   console.log("AUTHENTICATED", session);
   sessionCfg = session;
-  fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), function (err) {
+  fs.writeFile('./session.json', JSON.stringify(session), function (err) {
     if (err) {
       console.error(err);
     }
   });
 });
 
-client.on("auth_failure", (msg) => {
+bot.client.on("auth_failure", (msg) => {
   // Fired if session restore was unsuccessfull
   console.error("AUTHENTICATION FAILURE", msg);
 });
 
-client.on("ready", () => {
+bot.client.on("ready", () => {
   console.log("READY");
 });
 
 let isMenuOpen = false;
 
-client.on("message", async (msg) => {
+bot.client.on("message", async (msg) => {
   if (!isMenuOpen) {
-    if (msg.from === "5511930855040@c.us") {
+    if (msg.from === "5511943815306@c.us") {
       console.log("FROM: ", msg.from);
-      const chats = await client.getChats();
-      const gustChat = chats.filter((chat) => chat.name === "Gus Bot");
+      const chats = await bot.client.getChats();
+      const gustChat = chats.filter((chat) => chat.name === "Gus bot.client");
       const chat = gustChat[0];
-      client.sendMessage(
+      bot.client.sendMessage(
         msg.from,
         "Seja-bem vindo(a) ao menu, digite um dos números abaixo e selecione a opção que você deseja"
       );
-      client.sendMessage(
+      bot.client.sendMessage(
         msg.from,
         "1 - ouvir uma música\n2 - ver um gatinho\n 3 - sair do menu"
       );
@@ -50,10 +49,10 @@ client.on("message", async (msg) => {
     }
   }
 });
-client.on("message", async (msg) => {
+bot.client.on("message", async (msg) => {
   
-    const chats = await client.getChats();
-    const gustChat = chats.filter((chat) => chat.name === "Gus Bot");
+    const chats = await bot.client.getChats();
+    const gustChat = chats.filter((chat) => chat.name === "Gus bot.client");
     const chat = gustChat[0];
   if (isMenuOpen) {
     if (msg.from === "5511930855040@c.us") {
@@ -65,9 +64,9 @@ client.on("message", async (msg) => {
           const music = new MessageMedia(
             "audio/ogg",
             song64,
-            "./assets/theme_rocky.mp3"
+            "assets/theme_rocky.mp3"
           );
-          client.sendMessage(msg.from, music);
+          bot.client.sendMessage(msg.from, music);
           break;
         case "2":
           const file_buffer = fs.readFileSync("./assets/gatinho.jpg");
@@ -75,12 +74,12 @@ client.on("message", async (msg) => {
           const img = new MessageMedia(
             "image/jpeg",
             gatinho64,
-            "./assets/gatinho.jpg"
+            "assets/gatinho.jpg"
           );
-          client.sendMessage(msg.from, img);
+          bot.client.sendMessage(msg.from, img);
           break;
         case "3":
-          client.sendMessage(msg.from, "Obrigado por utilizar nossos serviços");
+          bot.client.sendMessage(msg.from, "Obrigado por utilizar nossos serviços");
           break;
         default:
           break;
@@ -88,6 +87,6 @@ client.on("message", async (msg) => {
     }
   }
 });
-client.on("disconnected", (reason) => {
+bot.client.on("disconnected", (reason) => {
   console.log("Client was logged out", reason);
 });
