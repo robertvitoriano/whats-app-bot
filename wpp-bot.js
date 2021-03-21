@@ -30,6 +30,10 @@ class Admin {
   }
 
   async sendFile(msg,number) {
+<<<<<<< HEAD
+    
+=======
+>>>>>>> 0ce0a013485fbadb9c93751157e8515e4294e3c2
     const adress = `55${number}@c.us`
 
     this.client.sendMessage(adress, msg);
