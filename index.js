@@ -1,20 +1,9 @@
-const fs = require("fs");
-const { Client, Location, Chat, MessageMedia } = require("whatsapp-web.js");
+const Bot = require('./wpp-bot.js');
 
-const SESSION_FILE_PATH = "./session.json";
-let sessionCfg;
-if (fs.existsSync(SESSION_FILE_PATH)) {
-  sessionCfg = require(SESSION_FILE_PATH);
-}
+const bot  = new Bot();
 
-const client = new Client({
-  puppeteer: { headless: false },
-  session: sessionCfg,
-});
-// You can use an existing session and avoid scanning a QR code by adding a "session" object to the client options.
-// This object must include WABrowserId, WASecretBundle, WAToken1 and WAToken2.
+bot.sendFile('')
 
-client.initialize();
 
 client.on("qr", (qr) => {
   // NOTE: This event will not be fired if a session is specified.
