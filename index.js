@@ -62,6 +62,7 @@ client.on("message", async (msg) => {
   }
 });
 client.on("message", async (msg) => {
+  
     const chats = await client.getChats();
     const gustChat = chats.filter((chat) => chat.name === "Gus Bot");
     const chat = gustChat[0];
