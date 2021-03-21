@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { Client, Location, Chat, MessageMedia } = require("whatsapp-web.js");
 
-class WhatsAppBot {
+class Admin {
   constructor() {
     const SESSION_FILE_PATH = "./session.json";
     let sessionCfg;
