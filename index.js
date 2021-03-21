@@ -1,4 +1,4 @@
-const Bot = require('./wpp-bot.js');
+const Bot = require('./WhatsAppBot.js');
 
 const bot  = new Bot();
 
